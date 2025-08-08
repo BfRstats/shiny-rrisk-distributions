@@ -34,12 +34,13 @@ rriskDistributionsClass$set("public",
                           else 
                             NULL,
       info_list         = private$info_list,
-      author_list       = private$author_list
+      author_list       = private$author_list,
+      model_name        = private$model_name
     )
     
     if (!is.null(exported_fit)) {
-      obj_representation[["selected_fit"]] <- private$fit_results[[exported_fit]]
-      obj_representation[["selected_fit"]]$fitted_dist_name <- exported_fit
+      obj_representation$selected_fit <- private$fit_results[[exported_fit]]
+      obj_representation$selected_fit$fitted_dist_name <- exported_fit
     }
     
     # readable json file
@@ -57,11 +58,11 @@ rriskDistributionsClass$set("public",
   {
     
     result <- private$check_this(object = file_path,
-                                preset_args(
-                                  private$is_correct_file_extension,
-                                  ext = "rriskdist"
-                                ),
-                                private$is_file_readable)
+                                 preset_args(
+                                   private$is_correct_file_extension,
+                                   ext = "rriskdist"
+                                 ),
+                                 private$is_file_readable)
     
     if (!result$is_ok)
       if (silent)
@@ -104,10 +105,13 @@ rriskDistributionsClass$set("public",
                                      NULL
       private$info_list         <- obj_data$info_list
       private$author_list       <- obj_data$author_list
+      private$model_name        <- obj_data$model_name
       
     } else {
+      
       result$is_ok <- FALSE
       result$error_message <- paste("File type '", file_type, "' is unknown.")
+      
     }
     #---END: set slots in rrisk dist obj with data------------------------------
     
@@ -126,6 +130,7 @@ rriskDistributionsClass$set("public",
     private$fit_results       <- list()
     private$info_list         <- list()
     private$author_list       <- list()
+    private$model_name        <- ""
     
     private$tickle_shiny()
   }

@@ -11,6 +11,7 @@ source("utility_functions/csv_to_vec.R")
 source("utility_functions/build_action_buttons.R")
 source("utility_functions/parse_action_buttons.R")
 source("utility_functions/read_and_interpretate_table.R")
+source("utility_functions/get_proper_file_name.R")
 
 source("shiny-rrisk-distributions_modules/handling_menu_bar/menu_bar_ui.R")
 source("shiny-rrisk-distributions_modules/handling_menu_bar/menu_bar_server.R")
@@ -32,11 +33,19 @@ ui <- fluidPage(
   # Application title
   #titlePanel("shiny rrisk distributions"),
   
-  menu_bar_ui(version = "alpha v0.7.3"),
+  menu_bar_ui(version = "alpha v0.8"),
   
   htmltools::br(), 
   htmltools::br(), 
   htmltools::br(),
+  textAreaInput(
+    inputId = "text_model_name",
+    label   = "Model name",
+    value   = "no project name",
+    width   = "500px",
+    height  = "5ch"
+  ),
+  htmltools::hr(),
   tabsetPanel(
     id = "main_tab",
     tabPanel( # MODEL CREATION

@@ -13,6 +13,7 @@ rriskDistributionsClass <- R6::R6Class(
     fit_results       = list(),
     info_list         = list(),
     author_list       = list(),
+    model_name        = "",
     # list with available distributions
     dist_info_list    = list(),
     # prototype function for shiny Rrisk R6 class; makes R6 responsive
@@ -38,5 +39,5 @@ source("rrisk-distributions-methods/add_get_change_remove_author_methods.R")
 source("rrisk-distributions-methods/save_open_clear_model_methods.R")
 source("rrisk-distributions-methods/set-get-info.R")
 source("rrisk-distributions-methods/get-distribution-names.R")
-
 source("rrisk-distributions-methods/atomic_check_methods.R")
+source("rrisk-distributions-methods/set_get_model_name_methods.R")

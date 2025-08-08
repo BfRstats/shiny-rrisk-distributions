@@ -133,6 +133,12 @@ menu_bar_server <- function(input, output, session, rrisk_dist_obj)
           callbackR         = function(value) {
             if (isTRUE(value)) {
               # clear data fields
+              # clear model name
+              updateTextInput(
+                session = session,
+                inputId = "text_model_name",
+                value   = "no project name"
+              )
               # for x
               updateTextAreaInput(
                 session = session,
@@ -212,14 +218,18 @@ menu_bar_server <- function(input, output, session, rrisk_dist_obj)
   output$download_project <- downloadHandler(
     filename = function()
     {
-      #get_proper_file_name(model_name(), "rrisk")
-      "test.rriskdist"
+      get_proper_file_name(input$text_model_name, "rriskdist")
+      #"test.rriskdist"
     }, 
     content  = function(file_path) 
     {
-      rrisk_dist_obj()$set_info(list(unit        = input$unit_description,
-                                     source      = input$source_description,
-                                     description = input$general_description))
+      rrisk_dist_obj()$set_model_name(input$text_model_name)
+      rrisk_dist_obj()$set_info(
+        list(unit        = input$unit_description,
+             source      = input$source_description,
+             description = input$general_description)
+      )
+      print(file_path)
       rrisk_dist_obj()$save_file(file_path, silent = TRUE)
     },
     contentType = "application/json"
@@ -229,7 +239,8 @@ menu_bar_server <- function(input, output, session, rrisk_dist_obj)
   output$download_export_to_shiny_rrisk <- downloadHandler(
     filename = function()
     {
-      "test_export.rriskdistex"
+      get_proper_file_name(input$text_model_name, "rriskdistex")
+      #"test_export.rriskdistex"
     },
     content = function(file_path)
     {
@@ -238,6 +249,7 @@ menu_bar_server <- function(input, output, session, rrisk_dist_obj)
         text  = paste("Current fit:", input$select_dist),
         type  = "info"
       )
+      rrisk_dist_obj()$set_model_name(input$text_model_name)
       rrisk_dist_obj()$set_info(
         list(unit        = input$unit_description,
              source      = input$source_description,

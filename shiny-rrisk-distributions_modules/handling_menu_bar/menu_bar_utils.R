@@ -4,6 +4,12 @@ open_rrisk_dist_file <- function(rrisk_dist_obj, file_path, session)
   
   if (result$is_ok) {
     
+    updateTextInput(
+      session = session,
+      inputId = "text_model_name",
+      value   = rrisk_dist_obj()$get_model_name()
+    )
+    
     input_data <- rrisk_dist_obj()$get_data()
     # set radio button for type of input data (pdf or cdf)
     updateRadioButtons(
